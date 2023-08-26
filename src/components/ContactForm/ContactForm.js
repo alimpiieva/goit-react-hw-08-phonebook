@@ -1,33 +1,32 @@
 import React, { useState } from 'react';
-import { LabelForm, Label, InputField, SubmitButton } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/slice';
+import { addContact } from '../../redux/contacts/api';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
   const [isAdding, setIsAdding] = useState(false);
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.contacts.isLoading);
   const contacts = useSelector(state => state.contacts.items);
 
-
   const handleSubmit = e => {
     e.preventDefault();
-    if (name.trim() === '' || phone.trim() === '') {
+    if (name.trim() === '' || number.trim() === '') {
       alert('Please provide both name and phone.');
       return;
     }
 
-    if (contacts.some(contact => contact.name === name || contact.phone === phone)) {
+    if (contacts.some(contact => contact.name === name || contact.number === number)) {
       alert('Contact with the same name or phone already exists.');
       return;
     }
+    
     setIsAdding(true);
-    dispatch(addContact({ name: name, phone: phone }))
+    dispatch(addContact({ name: name, number: number }))
       .then(() => {
         setName('');
-        setPhone('');
+        setNumber('');
         setIsAdding(false); 
       })
       .catch(error => {
@@ -40,16 +39,16 @@ const ContactForm = () => {
     const { name, value } = e.target;
     if (name === 'name') {
       setName(value);
-    } else if (name === 'phone') {
-      setPhone(value);
+    } else if (name === 'number') {
+      setNumber(value);
     }
   };
 
   return (
-    <LabelForm onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div>
-        <Label htmlFor="name">Name</Label>
-        <InputField
+        <label htmlFor="name">Name</label>
+        <input
           type="text"
           id="name"
           name="name"
@@ -58,19 +57,19 @@ const ContactForm = () => {
         />
       </div>
       <div>
-        <Label htmlFor="phone">Phone number</Label>
-        <InputField
+        <label htmlFor="number">Phone number</label>
+        <input
           type="tel"
-          id="phone"
-          name="phone"
-          value={phone}
+          id="number"
+          name="number"
+          value={number}
           onChange={handleChange}
         />
       </div>
-      <SubmitButton type="submit" disabled={isAdding || isLoading}>
+      <button type="submit" disabled={isAdding || isLoading}>
         {isAdding ? 'Adding...' : 'Add contact'}
-      </SubmitButton>
-    </LabelForm>
+      </button>
+    </form>
   );
 };
 

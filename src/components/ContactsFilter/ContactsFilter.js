@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setFilter } from '../../redux/thunk';
-import { selectFilter } from '../../redux/selectors';
+import { setFilter } from '../../redux/contacts/slice';
+import { selectFilter } from '../../redux/contacts/selectors';
 
 const ContactsFilter = () => {
   const filter = useSelector(selectFilter);
