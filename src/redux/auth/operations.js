@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { contactsApi } from '../api';
+import { toast } from 'react-toastify';
 
 const setAuthHeader = token => {
   contactsApi.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -18,6 +19,11 @@ export const register = createAsyncThunk(
       setAuthHeader(token);
       return res.data;
     } catch (error) {
+      if (error.response.status === 400) {
+        toast.error('Bad Request');
+      } else {
+        toast.error('Ops... something went wrong');
+      }
       return thunkAPI.rejectWithValue(error.response.data.message);
     }
   }
@@ -32,6 +38,11 @@ export const logIn = createAsyncThunk(
       setAuthHeader(token);
       return res.data;
     } catch (error) {
+      if (error.response.status === 401) {
+        toast.error('Unauthorized');
+      } else {
+        toast.error('Email or password is incorrect');
+      }
       return thunkAPI.rejectWithValue(error.response.data.message);
     }
   }

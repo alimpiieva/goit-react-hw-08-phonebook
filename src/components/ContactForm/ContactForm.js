@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/contacts/operations';
+import { toast } from 'react-toastify';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
@@ -13,12 +14,12 @@ const ContactForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     if (name.trim() === '' || number.trim() === '') {
-      alert('Please provide both name and phone.');
+      toast.error('Please provide both name and phone.', { closeOnClick: false });
       return;
     }
 
     if (contacts.some(contact => contact.name === name || contact.number === number)) {
-      alert('Contact with the same name or phone already exists.');
+      toast.error('Contact with the same name or phone already exists.', { closeOnClick: false });
       return;
     }
     
@@ -27,10 +28,11 @@ const ContactForm = () => {
       .then(() => {
         setName('');
         setNumber('');
-        setIsAdding(false); 
+        setIsAdding(false);
+        toast.success('Contact added successfully!', { closeOnClick: false });
       })
       .catch(error => {
-        alert('An error occurred while adding the contact.');
+        toast.error('An error occurred while adding the contact.', { closeOnClick: false });
         setIsAdding(false);
       });
   };
