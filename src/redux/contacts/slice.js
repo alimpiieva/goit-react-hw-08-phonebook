@@ -1,48 +1,5 @@
-import axios from 'axios';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
-export const contactsApi = axios.create({
-  baseURL: 'https://connections-api.herokuapp.com',
-});
-
-export const setContactsAuthHeader = token => {
-  contactsApi.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
-
-export const fetchContacts = createAsyncThunk('contacts/fetchContacts', async (filter, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.token;
-    setContactsAuthHeader(token); // Встановіть авторизаційний заголовок
-    const response = await contactsApi.get('/contacts', {
-      params: { filter },
-    });
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
-  }
-});
-
-export const addContact = createAsyncThunk('contacts/addContact', async (contact, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.token;
-    setContactsAuthHeader(token); // Встановіть авторизаційний заголовок
-    const response = await contactsApi.post('/contacts', contact);
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
-  }
-});
-
-export const deleteContact = createAsyncThunk('contacts/deleteContact', async (contactId, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.token;
-    setContactsAuthHeader(token); // Встановіть авторизаційний заголовок
-    await contactsApi.delete(`/contacts/${contactId}`);
-    return contactId;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
-  }
-});
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchContacts, deleteContact, addContact } from './operations';
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -50,6 +7,9 @@ const contactsSlice = createSlice({
   reducers: {
     setFilter: (state, action) => {
       state.filter = action.payload;
+    },
+    setContacts: (state, action) => {
+    state.contacts.items = action.payload;
     },
   },
   extraReducers: builder => {
@@ -75,6 +35,6 @@ const contactsSlice = createSlice({
   },
 });
 
-export const { setFilter } = contactsSlice.actions;
+export const { setFilter, setContacts } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

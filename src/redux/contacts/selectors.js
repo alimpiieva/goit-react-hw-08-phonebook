@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 
 export const selectContacts = state => state.contacts.items;
 export const selectFilter = state => state.contacts.filter;
+export const selectToken = state => state.auth.token;
 
 export const selectVisibleContacts = createSelector(
   [selectContacts, selectFilter],
