@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/contacts/operations';
 import { toast } from 'react-toastify';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
@@ -47,28 +48,30 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="name">Name</label>
+    <form onSubmit={handleSubmit} className="mb-4">
+      <div className="form-group">
+        <label htmlFor="name" className="form-label">Name</label>
         <input
           type="text"
           id="name"
           name="name"
           value={name}
           onChange={handleChange}
+          className="form-control"
         />
       </div>
-      <div>
-        <label htmlFor="number">Phone number</label>
+      <div className="form-group">
+        <label htmlFor="number" className="form-label">Phone number</label>
         <input
           type="tel"
           id="number"
           name="number"
           value={number}
           onChange={handleChange}
+          className="form-control"
         />
       </div>
-      <button type="submit" disabled={isAdding || isLoading}>
+      <button type="submit" className="btn btn-primary" disabled={isAdding || isLoading}>
         {isAdding ? 'Adding...' : 'Add contact'}
       </button>
     </form>

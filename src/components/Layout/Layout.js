@@ -6,12 +6,12 @@ import CustomSpinner  from './Spinner';
 
 export const Layout = () => {
   return (
-    <div style={{ maxWidth: 960, margin: '0 auto', padding: '0 16px' }}>
-      <AppBar />
-      <Suspense fallback={<CustomSpinner />}>
-        <Outlet />
-      </Suspense>
-      <Toaster position="top-right" reverseOrder={false} />
-    </div>
+    <div style={{ maxWidth: 960, margin: '0 auto', padding: '0 16px' }} className="container">
+    <AppBar />
+    <Suspense fallback={<CustomSpinner />}>
+      <Outlet />
+    </Suspense>
+    <Toaster position="top-right" reverseOrder={false} />
+  </div>
   );
 };

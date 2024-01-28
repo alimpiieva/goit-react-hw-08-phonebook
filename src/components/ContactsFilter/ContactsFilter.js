@@ -18,6 +18,7 @@ const ContactsFilter = () => {
       value={filter}
       onChange={handleFilterChange}
       placeholder="Search contacts..."
+      className="form-control"
     />
   );
 };

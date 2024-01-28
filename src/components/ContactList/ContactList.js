@@ -22,21 +22,22 @@ const ContactList = () => {
   };
 
   return (
-    <div>
-      {visibleContacts.map(contact => (
-        <div key={contact.id}>
-          <span>
-            {contact.name}: {contact.number} 
-          </span>
-          <button
-            onClick={() => handleDeleteContact(contact.id)}
-            disabled={deletingContactId === contact.id}
-          >
-            {deletingContactId === contact.id ? 'Deleting...' : 'Delete'}
-          </button>
-        </div>
-      ))}
-    </div>
+    <div className="list-group">
+    {visibleContacts.map(contact => (
+      <div key={contact.id} className="list-group-item d-flex justify-content-between">
+        <span>
+          {contact.name}: {contact.number}
+        </span>
+        <button
+          onClick={() => handleDeleteContact(contact.id)}
+          disabled={deletingContactId === contact.id}
+          className="btn btn-danger"
+        >
+          {deletingContactId === contact.id ? 'Deleting...' : 'Delete'}
+        </button>
+      </div>
+    ))}
+  </div>
   );
 };
 

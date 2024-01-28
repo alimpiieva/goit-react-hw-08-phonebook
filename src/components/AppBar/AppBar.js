@@ -8,9 +8,9 @@ export const AppBar = () => {
   const { isLoggedIn } = useAuth();
 
   return (
-    <header className={css.header}>
-      <Navigation />
-      {isLoggedIn ? <UserMenu /> : <AuthNav />}
-    </header>
+    <header className={`navbar navbar-light ${css.header}`}>
+    <Navigation />
+    {isLoggedIn ? <UserMenu /> : <AuthNav />}
+  </header>
   );
 };
