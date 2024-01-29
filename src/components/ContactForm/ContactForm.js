@@ -49,27 +49,33 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="mb-4">
-      <div className="form-group">
-        <label htmlFor="name" className="form-label">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={name}
-          onChange={handleChange}
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="number" className="form-label">Phone number</label>
-        <input
-          type="tel"
-          id="number"
-          name="number"
-          value={number}
-          onChange={handleChange}
-          className="form-control"
-        />
+      <div className="row">
+        <div className="col">
+          <div className="form-group mb-3">
+            <label htmlFor="name" className="form-label">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={name}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
+        </div>
+        <div className="col">
+          <div className="form-group mb-3">
+            <label htmlFor="number" className="form-label">Phone number</label>
+            <input
+              type="tel"
+              id="number"
+              name="number"
+              value={number}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
+        </div>
       </div>
       <button type="submit" className="btn btn-primary" disabled={isAdding || isLoading}>
         {isAdding ? 'Adding...' : 'Add contact'}
@@ -77,5 +83,6 @@ const ContactForm = () => {
     </form>
   );
 };
+
 
 export default ContactForm;
